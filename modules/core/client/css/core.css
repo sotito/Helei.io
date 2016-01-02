@@ -1,5 +1,13 @@
 .content {
-  margin-top: 50px;
+  margin-top: 10px;
+}
+.row{
+  margin: 0;
+}
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0;
 }
 .undecorated-link:hover {
   text-decoration: none;
@@ -34,4 +42,57 @@ a:hover .header-profile-image {
 }
 .has-error .help-inline.error-text {
   display: inline;
+}
+
+.col-xs-12.public-event-nearby-col {
+  height: 185px;
+  overflow-y: scroll;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+  margin-top: -25px;
+}
+.col-xs-12.helei-logo-col {
+  background-image: url('/modules/core/client/img/brand/helei-logo.png');
+  height: 50px;
+  background-size: 100px 45px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.col-xs-4.top-bar-tab-inbox {
+  background-image: url('/modules/core/client/img/brand/helei-inbox.png');
+  height: 50px;
+  background-size: 45px 40px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+
+.col-xs-4.top-bar-tab-location {
+  background-image: url('/modules/core/client/img/brand/helei-location.png');
+  height: 50px;
+  background-size: 45px 40px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.col-xs-4.top-bar-tab-create {
+  background-image: url('/modules/core/client/img/brand/helei-create.png');
+  height: 50px;
+  background-size: 45px 40px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+.row.top-bar-tab {
+  margin: 0;
+  padding: 0;
+  z-index: 1000;
+  margin-bottom: -20px;
+}
+
+.col-xs-12.map-api-col{
+  margin: 0;
+  padding: 0;
+
 }
