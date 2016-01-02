@@ -21,18 +21,35 @@
       </div>
     </div>
   </div>
+
+  <div class="row public-event-nearby-header-row">
+    <div class="col-xs-12 public-event-nearby-header-col">
+      <p>Public Events Nearby</p>
+    </div>
+  </div>
+
   <div class="row public-event-nearby-row">
     <div class="col-xs-12 public-event-nearby-col">
       <div class="panel panel-default">
         <!-- Default panel contents -->
         <!-- List group -->
-        <ul class="list-group">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Morbi leo risus</li>
-          <li class="list-group-item">Porta ac consectetur ac</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
+        <section ng-controller="ArticlesController" ng-init="find()">
+          <div class="list-group">
+            <a ng-repeat="article in articles" ui-sref="articles.view({articleId: article._id})" class="list-group-item">
+              <small class="list-group-item-text">
+                Posted on
+                <span ng-bind="article.created | date:'mediumDate'"></span>
+                by
+                <span ng-bind="article.user.displayName"></span>
+              </small>
+              <h4 class="list-group-item-heading" ng-bind="article.title"></h4>
+              <p class="list-group-item-text" ng-bind="article.content"></p>
+            </a>
+          </div>
+          <div class="alert alert-warning text-center" ng-if="articles.$resolved && !articles.length">
+            No event yet, why don't you <a ui-sref="articles.create">create one</a>?
+          </div>
+        </section>
       </div>
     </div>
   </div>

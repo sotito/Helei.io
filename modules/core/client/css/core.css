@@ -88,11 +88,24 @@ a:hover .header-profile-image {
   margin: 0;
   padding: 0;
   z-index: 1000;
-  margin-bottom: -20px;
+  margin-bottom: 0px;
+  border-bottom: 1px solid black;
 }
 
 .col-xs-12.map-api-col{
   margin: 0;
   padding: 0;
 
+}
+.col-xs-12.public-event-nearby-header-col {
+  height: 50px;
+  z-index: 1000;
+  margin-top: -25px;
+  background: white;
+  text-align: center;
+}
+
+ng-map {
+  height: 240px;
+  border-bottom: 1px solid black;
 }
