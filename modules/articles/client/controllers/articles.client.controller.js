@@ -1,9 +1,18 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-  function ($scope, $stateParams, $location, Authentication, Articles) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles', 'FileUploader',
+  function ($scope, $stateParams, $location, Authentication, Articles, FileUploader) {
     $scope.authentication = Authentication;
+/*
+    $scope.imageURL = "";
+
+
+    // Create file uploader instance
+    $scope.uploader = new FileUploader({
+      url: 'api/users/picture'
+    });
+*/
 
     // Create new Article
     $scope.create = function (isValid) {
@@ -17,8 +26,11 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
 
       // Create new Article object
       var article = new Articles({
-        title: this.title,
-        content: this.content
+        etitle: this.etitle,
+        econtent: this.econtent,
+        ecategory: this.ecategory,
+        elocation: this.elocation,
+        edate: this.edate
       });
 
       // Redirect after save
@@ -26,8 +38,8 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
         $location.path('articles/' + response._id);
 
         // Clear form fields
-        $scope.title = '';
-        $scope.content = '';
+        $scope.etitle = '';
+        $scope.econtent = '';
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });

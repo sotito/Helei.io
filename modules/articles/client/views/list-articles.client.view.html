@@ -10,8 +10,11 @@
         by
         <span ng-bind="article.user.displayName"></span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="article.title"></h4>
-      <p class="list-group-item-text" ng-bind="article.content"></p>
+      <h4 class="list-group-item-heading" ng-bind="article.etitle"></h4>
+      <p class="list-group-item-text" ng-bind="article.econtent"></p>
+      <p class="list-group-item-text" ng-bind="article.edate"></p>
+      <p class="list-group-item-text" ng-bind="article.elocation"></p>
+      <p class="list-group-item-text" ng-bind="article.ecateogry"></p>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="articles.$resolved && !articles.length">

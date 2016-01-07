@@ -14,16 +14,28 @@ var ArticleSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  title: {
+  etitle: {
     type: String,
     default: '',
     trim: true,
     required: 'Title cannot be blank'
   },
-  content: {
+  econtent: {
     type: String,
     default: '',
     trim: true
+  },
+  ecategory:{
+    type: String,
+    default: ''
+  },
+  edate:{
+    type: Date,
+    default: ''
+  },
+  elocation:{
+    type: String,
+    default: ''
   },
   user: {
     type: Schema.ObjectId,
