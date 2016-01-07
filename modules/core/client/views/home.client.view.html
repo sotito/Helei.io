@@ -12,15 +12,31 @@
     <uib-tab heading="Location">
 
     <a ng-click="location()">
+
     <div class="col-xs-4 top-bar-tab-location">
 
     </div>
+      <div class="col-xs-8 top-bar-tab-searchbar">
+
+          <label for="slocation"></label>
+          <input name="slocation" type="slocation" ng-model="slocation" id="slocation" class="form-control" placeholder="sLocation">
+
+        <label for="szoom"></label>
+        <input name="szoom" type="szoom" ng-model="szoom" id="szoom" class="form-control" placeholder="szoom">
+
+
+      </div>
     </a>
       <div class="row map-api-row">
         <div class="col-xs-12 map-api-col">
           <div map-lazy-load="https://maps.google.com/maps/api/js">
-            <ng-map center="18.2106745,-66.4506886" zoom="8" zoom-control="false" map-type-control="false" street-view-control="false">
+            <ng-map center="18.2106745, -66.4506886" zoom="{{szoom}}" zoom-control="false" map-type-control="false" street-view-control="false">
+              <section ng-controller="ArticlesController" ng-init="find()">
+              <marker ng-repeat="article in articles" ui-sref="articles.view({articleId: article._id})" position="{{article.elocation}}">
+             </marker>
 
+                </section>
+              <marker position="{{slocation}}" icon="{url:'/modules/core/client/img/brand/helei-marker.png', scaledSize:[40,53]}"  animation="DROP" on-click="toggleBounce()"></marker>
             </ng-map>
 
           </div>

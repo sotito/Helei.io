@@ -7,14 +7,23 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
     // This provides Authentication context.
     $scope.authentication = Authentication;
 
+    $scope.slocation = "";
+
+    $scope.szoom = 8;
+
+    $scope.slat = 18.2106745;
+
+    $scope.slng = -66.4506886;
+
+
+
+
 
 
 
     var vm;
 
 
-    $scope.lat = '18.2106745';
-    $scope.lng = '-66.4506886';
 
     NgMap.getMap().then(function(map) {
 
@@ -28,13 +37,19 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
       });
 
+    $scope.toggleBounce = function() {
+      if (this.getAnimation() != null) {
+        this.setAnimation(null);
+      } else {
+        this.setAnimation(google.maps.Animation.BOUNCE);
+      }
+    };
+
 
       $scope.location = function () {
 
 
-        vm.setCenter(vm.home);
-
-
+        $scope.slocation = "current-position";
 
 
          };
