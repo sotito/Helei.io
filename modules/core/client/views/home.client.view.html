@@ -9,14 +9,14 @@
 
     <uib-tabset justified="false">
 
-    <uib-tab heading="Location">
+    <uib-tab class="uibtab-heading-location" heading="">
 
     <a ng-click="location()">
 
-    <div class="col-xs-4 top-bar-tab-location">
+   <!-- <div class="col-xs-4 top-bar-tab-location">
 
-    </div>
-      <div class="col-xs-8 top-bar-tab-searchbar">
+    </div>-->
+ <!--     <div class="col-xs-8 top-bar-tab-searchbar">
 
           <label for="slocation"></label>
           <input name="slocation" type="slocation" ng-model="slocation" id="slocation" class="form-control" placeholder="sLocation">
@@ -25,18 +25,29 @@
         <input name="szoom" type="szoom" ng-model="szoom" id="szoom" class="form-control" placeholder="szoom">
 
 
-      </div>
+      </div>-->
     </a>
       <div class="row map-api-row">
         <div class="col-xs-12 map-api-col">
           <div map-lazy-load="https://maps.google.com/maps/api/js">
             <ng-map center="18.2106745, -66.4506886" zoom="{{szoom}}" zoom-control="false" map-type-control="false" street-view-control="false">
               <section ng-controller="ArticlesController" ng-init="find()">
-              <marker ng-repeat="article in articles" ui-sref="articles.view({articleId: article._id})" position="{{article.elocation}}">
-             </marker>
+              <custom-marker ng-repeat="article in articles" ui-sref="articles.view({articleId: article._id})" position="{{article.elocation}}">
+                <div class="front-display">
+
+                  <p class="list-group-item-heading" ng-bind="article.etitle"></p>
+
+                  <p class="list-group-item-text" ng-bind="article.econtent"></p>
+                  <p class="list-group-item-text" ng-bind="article.edate"></p>
+                  <p class="list-group-item-text" ng-bind="article.elocation"></p>
+                  <p class="list-group-item-text" ng-bind="article.ecategory"></p>
+                </div>
+             </custom-marker>
 
                 </section>
-              <marker position="{{slocation}}" icon="{url:'/modules/core/client/img/brand/helei-marker.png', scaledSize:[40,53]}"  animation="DROP" on-click="toggleBounce()"></marker>
+
+              <marker position="{{slocation}}" icon="{url:'/modules/core/client/img/brand/helei-marker.png', scaledSize:[40,53]}"  animation="Animation.BOUNCE"></marker>
+
             </ng-map>
 
           </div>
@@ -86,11 +97,10 @@
     </uib-tab>
 
 
-      <uib-tab heading="Inbox">
-        <div class="col-xs-4 top-bar-tab-inbox">
+      <uib-tab class="uibtab-heading-inbox" heading="">
 
-        </div>
-        <div class="row">
+        <div class="row inbox-row">
+          <div class="col-xs-12 inbox-col">
 
           <ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">
             <li ng-repeat="item in menu.items | orderBy: 'position'" ng-if="item.shouldRender(authentication.user);" ng-switch="item.type" ng-class="{ active: $state.includes(item.state), dropdown: item.type === 'dropdown' }" class="{{item.class}}" dropdown="item.type === 'dropdown'">
@@ -142,6 +152,7 @@
           </ul>
 
         </div>
+        </div>
 
 
 
@@ -150,16 +161,15 @@
 
 
 
-      <uib-tab heading="Event">
-    <div class="col-xs-4 top-bar-tab-create">
+      <uib-tab class="uibtab-heading-create" heading="">
+    <div class="col-xs-12 top-bar-tab-create">
 
     </div>
 
         <section ng-controller="ArticlesController">
-          <div class="page-header">
-            <h1> : {{etitle}} </h1>
-          </div>
-          <div class="col-xs-12">
+
+          <div class="row articles-row">
+          <div class="col-xs-12 articles-col">
             <form name="articleForm" class="form-horizontal" ng-submit="create(articleForm.$valid)" novalidate>
               <fieldset>
                 <div class="row"><div class="col-xs-12">
@@ -202,11 +212,36 @@
                 </div></div>
                 <div class="row"><div class="col-xs-12">
                 <div class="form-group">
+                  <div class="row"><div class="col-xs-12">
                   <label for="elocation">eLocation</label>
-                  <input name="elocation" type="elocation" ng-model="elocation" id="elocation" class="form-control" placeholder="eLocation" required>
-                </div>
-                  </div></div>
+                    </div></div>
 
+
+
+
+
+                  <input places-auto-complete
+                         ng-model="elocation"
+                         component-restrictions="{country:'pr'}"
+                         types="{{types}}"
+                         id="elocation"
+                         on-place-changed="placeChanged()" />
+
+                  <select ng-model="types">
+                    <option value="['geocode']">Geodode</option>
+                    <option value="['establishment']">Establishment</option>
+                    <option value="['address']">Address</option>
+                  </select>
+
+                  <div ng-show="place">
+                    Address = {{place.formatted_address}} <br/>
+                    Location: {{place.geometry.location}}<br/>
+                  </div>
+
+
+                </div>
+
+                </div></div>
                <!-- <div class="row"><div class="col-xs-12">
                 <div class="text-center form-group" ng-hide="uploader.queue.length">
                   <span class="btn btn-default btn-file">Select Image <input type="file" nv-file-select uploader="uploader">
@@ -224,6 +259,7 @@
                 </div>
               </fieldset>
             </form>
+            </div>
           </div>
         </section>
 

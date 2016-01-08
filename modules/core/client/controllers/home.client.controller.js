@@ -24,10 +24,37 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
     var vm;
 
 
+    $scope.types = "['establishment']";
+    $scope.placeChanged = function() {
+      $scope.elocation = $scope.getPlace();
+      console.log('location', $scope.elocation.geometry.location);
+      vm.map.setCenter($scope.elocation.geometry.location);
+    }
+
 
     NgMap.getMap().then(function(map) {
 
+
       vm = map;
+
+      $scope.locations = [
+        [54.779951, 9.334164], [47.209613, 15.991539],
+        [51.975343, 7.596731], [51.97539, 7.596962],
+        [47.414847, 8.23485], [47.658028, 9.159596],
+        [47.525927, 7.68761], [50.85558, 9.704403],
+        [54.320664, 10.285977], [49.214374, 6.97506],
+        [52.975556, 7.596811], [52.975556, 7.596811],
+        [52.975556, 7.596811], [52.975556, 7.596811],
+        [52.975556, 7.596811], [52.975556, 7.596811],
+        [52.975556, 7.596811], [52.975556, 7.596811],
+        [52.975556, 7.596811], [52.975556, 7.596811]
+      ];
+
+
+
+      var markerCluster = new MarkerClusterer(map, map.customMarkers);
+
+
 
       vm.home = vm.getCenter();
 
@@ -37,13 +64,9 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
       });
 
-    $scope.toggleBounce = function() {
-      if (this.getAnimation() != null) {
-        this.setAnimation(null);
-      } else {
-        this.setAnimation(google.maps.Animation.BOUNCE);
-      }
-    };
+
+
+
 
 
       $scope.location = function () {
@@ -141,10 +164,38 @@ homeController.controller('DatepickerDemoCtrl', ['$scope', 'Authentication', 'Ng
     }]);
 
 
-homeController.controller('MyCtrl',['$scope', 'Authentication', 'NgMap', '$uibModal',
+homeController.controller('mapController',['$scope', 'Authentication', 'NgMap', '$uibModal',
   function ($scope, Authentication, NgMap, $uibModal) {
 
+/*
 
+    var vm = this;
+    vm.positions = [
+      [54.779951, 9.334164], [47.209613, 15.991539],
+      [51.975343, 7.596731], [51.97539, 7.596962],
+      [47.414847, 8.23485], [47.658028, 9.159596],
+      [47.525927, 7.68761], [50.85558, 9.704403],
+      [54.320664, 10.285977], [49.214374, 6.97506],
+      [52.975556, 7.596811], [52.975556, 7.596811],
+      [52.975556, 7.596811], [52.975556, 7.596811],
+      [52.975556, 7.596811], [52.975556, 7.596811],
+      [52.975556, 7.596811], [52.975556, 7.596811],
+      [52.975556, 7.596811], [52.975556, 7.596811]];
+
+    vm.dynMarkers = []
+    NgMap.getMap().then(function(map) {
+      var bounds = new google.maps.LatLngBounds();
+      for (var k in map.customMarkers) {
+        var cm = map.customMarkers[k];
+        vm.dynMarkers.push(cm);
+        bounds.extend(cm.getPosition());
+      };
+
+      vm.markerClusterer = new MarkerClusterer(map, vm.dynMarkers, {});
+      map.setCenter(bounds.getCenter());
+      map.fitBounds(bounds);
+    });
+*/
 
 
 }]);

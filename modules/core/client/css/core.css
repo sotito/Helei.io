@@ -1,3 +1,113 @@
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  color: #555;
+  cursor: default;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+
+}
+
+.custom-marker.front-display {
+  background: white;
+  font-size: 10px;
+}
+.tab-content {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+ul.nav.nav-tabs {
+  height: 75px;
+  text-align: center;
+
+  background-repeat: no-repeat;
+  background-size: 90%;
+  padding: 0;
+  margin: 0;
+  background-position-x: 20px;
+}
+.nav-tabs > li > a {
+  color: #555;
+  cursor: default;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+
+}
+
+
+ul.nav.nav-tabs {
+  height: 75px;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+li.active {
+  width: 33%;
+}
+
+.nav-tabs > li {
+  float: left;
+  margin-bottom: -1px;
+  width: 33%;
+}
+
+html {
+  background: #FFCB53;
+  
+}
+body{
+  background: transparent;
+}
+.nav-tabs > li > a {
+  background: transparent;
+}
+
+
+li.uibtab-heading-location {
+  background-image: url('/modules/core/client/img/brand/location.png');
+  height: 75px;
+  text-align: center;
+ background-size: 70px;
+  background-repeat: no-repeat;
+
+  padding: 0;
+  margin: 0;
+  background-position-x: 50%;
+}
+.col-xs-12.articles-col {
+  padding: 5px;
+  margin: 0;
+}
+li.uibtab-heading-inbox {
+  background-image: url('/modules/core/client/img/brand/inbox.png');
+  height: 75px;
+  text-align: center;
+  background-size: 60px;
+  background-repeat: no-repeat;
+
+  padding: 0;
+  margin: 0;
+  background-position-x: 50%;
+}
+
+li.uibtab-heading-create {
+  background-image: url('/modules/core/client/img/brand/create.png');
+  height: 75px;
+  text-align: center;
+  background-size: 60px;
+  background-repeat: no-repeat;
+
+  padding: 0;
+  margin: 0;
+  background-position-x: 50%;
+}
+
+
+
 header.navbar.navbar-fixed-bottom.navbar-inverse {
   opacity: 0.90;
   background: url('/modules/core/client/img/brand/helei-event-2.png') rgba(192, 192, 192, 0.79);
@@ -68,7 +178,7 @@ a:hover .header-profile-image {
   margin-top: -25px;
 }
 .col-xs-12.helei-logo-col {
-  background-image: url('/modules/core/client/img/brand/helei-logo.png');
+  background-image: url('/modules/core/client/img/brand/helei-logo2.png');
   height: 50px;
   background-size: 100px 45px;
   background-repeat: no-repeat;
@@ -76,7 +186,7 @@ a:hover .header-profile-image {
 }
 
 .col-xs-4.top-bar-tab-inbox {
-  background-image: url('/modules/core/client/img/brand/helei-inbox.png');
+
   height: 50px;
   background-size: 45px 40px;
   background-repeat: no-repeat;
@@ -92,12 +202,10 @@ a:hover .header-profile-image {
   background-position: 50%;
 }
 
-.col-xs-4.top-bar-tab-create {
-  background-image: url('/modules/core/client/img/brand/helei-create.png');
+.col-xs-12.top-bar-tab-create {
+
   height: 50px;
-  background-size: 45px 40px;
-  background-repeat: no-repeat;
-  background-position: 50%;
+
 }
 .row.top-bar-tab {
   margin: 0;
