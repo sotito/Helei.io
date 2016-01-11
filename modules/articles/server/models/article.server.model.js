@@ -40,6 +40,10 @@ var ArticleSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User'
+  },
+  expiresAt: {
+    expires: 1 * 60,
+    type: String
   }
 });
 

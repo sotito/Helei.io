@@ -1,9 +1,14 @@
-<section ng-controller="HomeController">
+<section ng-controller="HomeController" ng-init="init()">
 
+
+  <a ng-click="open('beta')">
   <div class="row helei-logo-row">
     <div class="col-xs-12 helei-logo-col">
+
     </div>
   </div>
+    </a>
+
 
   <div class="row top-bar-tab">
 
@@ -33,15 +38,14 @@
             <ng-map center="18.2106745, -66.4506886" zoom="{{szoom}}" zoom-control="false" map-type-control="false" street-view-control="false">
               <section ng-controller="ArticlesController" ng-init="find()">
               <custom-marker ng-repeat="article in articles" ui-sref="articles.view({articleId: article._id})" position="{{article.elocation}}">
+                <div class="cm">
                 <div class="front-display">
 
                   <p class="list-group-item-heading" ng-bind="article.etitle"></p>
 
-                  <p class="list-group-item-text" ng-bind="article.econtent"></p>
-                  <p class="list-group-item-text" ng-bind="article.edate"></p>
-                  <p class="list-group-item-text" ng-bind="article.elocation"></p>
-                  <p class="list-group-item-text" ng-bind="article.ecategory"></p>
+
                 </div>
+                  </div>
              </custom-marker>
 
                 </section>

@@ -15,6 +15,34 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
     $scope.slng = -66.4506886;
 
+    $scope.init = function () {
+
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'modules/beta/client/views/beta.client.view.html',
+
+        controller: function ($scope, $uibModalInstance, $http) {
+
+
+
+          $scope.ok = function () {
+            $uibModalInstance.ok();
+
+          };
+
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+          };
+
+
+        },
+        size: 'lg'
+      });
+
+
+    };
+
+
 
 
 
