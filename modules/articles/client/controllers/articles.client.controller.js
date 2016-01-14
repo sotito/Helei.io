@@ -1,8 +1,8 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles', 'FileUploader',
-  function ($scope, $stateParams, $location, Authentication, Articles, FileUploader) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
+  function ($scope, $stateParams, $location, Authentication, Articles) {
     $scope.authentication = Authentication;
 /*
     $scope.imageURL = "";
@@ -30,7 +30,8 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
         econtent: this.econtent,
         ecategory: this.ecategory,
         elocation: this.elocation,
-        edate: this.edate
+        dt: this.dt,
+        edt: this.edt
       });
 
       // Redirect after save
@@ -40,6 +41,11 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
         // Clear form fields
         $scope.etitle = '';
         $scope.econtent = '';
+        $scope.ecategory = '';
+        $scope.elocation = '';
+        $scope.dt = '';
+        $scope.edt = '';
+
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });

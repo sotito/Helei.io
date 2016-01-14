@@ -7,6 +7,7 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
     // This provides Authentication context.
     $scope.authentication = Authentication;
 
+
     $scope.slocation = "";
 
     $scope.szoom = 8;
@@ -15,7 +16,42 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
     $scope.slng = -66.4506886;
 
-    $scope.init = function () {
+
+
+
+    var edt = $scope.edt;
+
+    var catdata = $scope.catdata;
+
+    $scope.catdata = {
+      availableOptions: [
+        {id: '1', name: 'Happy Hour'},
+        {id: '2', name: 'Karaokee'},
+        {id: '3', name: 'Music'},
+        {id: '4', name: 'Food'},
+        {id: '5', name: 'Paranda'}
+      ],
+      selectedOption: {id: '3', name: 'Music'} //This sets the default value of the select in the ui
+    };
+
+    var testcategory = $scope.catdata.selectedOption.name;
+
+    $scope.ecategory=testcategory;
+
+
+
+
+
+
+
+    $scope.tabs = [
+      { },
+      { },
+      { },
+    ];
+
+
+  /*  $scope.init = function () {
 
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
@@ -40,7 +76,7 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
       });
 
 
-    };
+    };*/
 
 
 
@@ -57,7 +93,7 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
       $scope.elocation = $scope.getPlace();
       console.log('location', $scope.elocation.geometry.location);
       vm.map.setCenter($scope.elocation.geometry.location);
-    }
+    };
 
 
     NgMap.getMap().then(function(map) {
@@ -86,11 +122,14 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
       vm.home = vm.getCenter();
 
-      console.log(vm.getCenter());
 
 
 
       });
+
+    $scope.redraw = function(){
+      google.maps.event.trigger(vm.home, 'resize');
+    };
 
 
 
@@ -106,90 +145,155 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
          };
 
 
-    }]);
+
+
+
+
+
+
+    $scope.today = function() {
+      $scope.dt = new Date();
+      $scope.edt = new Date();
+    };
+    $scope.today();
+
+    $scope.clear = function() {
+      $scope.dt = null;
+    };
+
+    // Disable weekend selection
+    $scope.disabled = function(date, mode) {
+      return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+    };
+
+    $scope.toggleMin = function() {
+      $scope.minDate = $scope.minDate ? null : new Date();
+    };
+
+    $scope.toggleMin();
+    $scope.maxDate = new Date(2020, 5, 22);
+
+    $scope.open1 = function() {
+      $scope.popup1.opened = true;
+    };
+
+    $scope.open2 = function() {
+      $scope.popup2.opened = true;
+    };
+
+    $scope.setDate = function(year, month, day) {
+      $scope.dt = new Date(year, month, day);
+      $scope.edt = new Date(year, month, day);
+    };
+
+    $scope.dateOptions = {
+      formatYear: 'yy',
+      startingDay: 1
+    };
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    $scope.popup1 = {
+      opened: false
+    };
+
+    $scope.popup2 = {
+      opened: false
+    };
+
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var afterTomorrow = new Date();
+    afterTomorrow.setDate(tomorrow.getDate() + 1);
+    $scope.events =
+        [
+          {
+            date: tomorrow,
+            status: 'full'
+          },
+          {
+            date: afterTomorrow,
+            status: 'partially'
+          }
+        ];
+
+    $scope.getDayClass = function(date, mode) {
+      if (mode === 'day') {
+        var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+        for (var i = 0; i < $scope.events.length; i++) {
+          var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+          if (dayToCheck === currentDay) {
+            return $scope.events[i].status;
+          }
+        }
+      }
+
+      return '';
+    };
+
+
+    $scope.mytimestart = new Date();
+
+    $scope.hstep = 1;
+    $scope.mstep = 1;
+
+
+    $scope.ismeridian = true;
+
+/*
+
+    $scope.update = function() {
+
+      $scope.dt.setHours( 14 );
+      $scope.dt.setMinutes( 0 );
+      $scope.mytimestart = $scope.dt;
+    };
+*/
+
+
+
+    $scope.clear = function() {
+      $scope.mytimestart = null;
+    };
+
+    $scope.mytimeend = new Date();
+
+
+
+
+  /*  $scope.update = function() {
+
+
+      $scope.edt.setHours( 14 );
+      $scope.edt.setMinutes( 0 );
+      $scope.mytimeend = $scope.edt;
+    };
+*/
+
+
+    $scope.clear = function() {
+      $scope.mytimeend = null;
+    };
+
+
+
+
+  }]);
 
 
 homeController.controller('DatepickerDemoCtrl', ['$scope', 'Authentication', 'NgMap', '$uibModal',
     function ($scope, Authentication, NgMap, $uibModal) {
 
-
-      $scope.today = function() {
-        $scope.dt = new Date();
-      };
-      $scope.today();
-
-      $scope.clear = function () {
-        $scope.dt = null;
-      };
-
-      // Disable weekend selection
-      $scope.disabled = function(date, mode) {
-        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-      };
-
-      $scope.toggleMin = function() {
-        $scope.minDate = $scope.minDate ? null : new Date();
-      };
-      $scope.toggleMin();
-      $scope.maxDate = new Date(2020, 5, 22);
-
-      $scope.open = function($event) {
-        $scope.status.opened = true;
-      };
-
-      $scope.setDate = function(year, month, day) {
-        $scope.dt = new Date(year, month, day);
-      };
-
-      $scope.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
-      };
-
-      $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-      $scope.format = $scope.formats[0];
-
-      $scope.status = {
-        opened: false
-      };
-
-      var tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      var afterTomorrow = new Date();
-      afterTomorrow.setDate(tomorrow.getDate() + 2);
-      $scope.events =
-          [
-            {
-              date: tomorrow,
-              status: 'full'
-            },
-            {
-              date: afterTomorrow,
-              status: 'partially'
-            }
-          ];
-
-      $scope.getDayClass = function(date, mode) {
-        if (mode === 'day') {
-          var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-          for (var i=0;i<$scope.events.length;i++){
-            var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-            if (dayToCheck === currentDay) {
-              return $scope.events[i].status;
-            }
-          }
-        }
-
-        return '';
-      };
-
-
-
-
-
     }]);
+
+
+
+
+
 
 
 homeController.controller('mapController',['$scope', 'Authentication', 'NgMap', '$uibModal',

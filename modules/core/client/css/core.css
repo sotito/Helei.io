@@ -8,6 +8,73 @@
   height: 100%;
 
 }
+.col-xs-12.date-label-col {
+  text-align: center;
+}
+
+li.uibtab-heading-location.ng-isolate-scope.active {
+
+  background-image: url('/modules/core/client/img/brand/location-active.png');
+
+}
+
+li.uibtab-heading-location.ng-isolate-scope {
+
+  background-image: url('/modules/core/client/img/brand/location.png');
+
+}
+li.uibtab-heading-inbox.ng-isolate-scope.active {
+
+  background-image: url('/modules/core/client/img/brand/inbox-active.png');
+
+}
+
+li.uibtab-heading-inbox.ng-isolate-scope {
+
+  background-image: url('/modules/core/client/img/brand/inbox.png');
+
+}
+
+li.uibtab-heading-create.ng-isolate-scope.active {
+
+  background-image: url('/modules/core/client/img/brand/create-active.png');
+
+}
+
+li.uibtab-heading-create.ng-isolate-scope {
+
+  background-image: url('/modules/core/client/img/brand/create.png');
+
+}
+
+
+
+.col-xs-12.article-view-col {
+  height: 15%;
+  background: white;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: left;
+  align-items: center;
+}
+
+.label-date-col{
+  padding: 0;
+
+}
+.location-auto-complete-col{
+  padding: 0;
+}
+input#elocation {
+  width: 100%;
+}
+
+.date-label-col{
+  padding: 0;
+}
 
 .cm.ng-scope {
   background: white;
@@ -17,14 +84,26 @@
 }
 
 
+.modal-dialog {
+  position: relative;
+  width: 388px;
+  margin: 0;
+  height: 600px;
+  padding: 0;
+  background-image: url('../../../../modules/core/client/img/brand/spash.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
 
 
 .modal-body {
-  background: url('../../../../modules/core/client/img/brand/spash.png');
-  height: 600px;
-  width: 388px;
 
-  background-repeat: no-repeat;
+  background: transparent;
+}
+.modal-content {
+  background: transparent;
+  border: 0;
+  box-shadow: 0 0 0 black;
 }
 
 
@@ -94,6 +173,12 @@ html {
   background: #FFCB53;
   
 }
+.row.helei-logo-row {
+  background: white;
+  margin: 0;
+  padding: 0;
+  margin-top: -10px;
+}
 body{
   background: transparent;
 }
@@ -103,10 +188,10 @@ body{
 
 
 li.uibtab-heading-location {
-  background-image: url('/modules/core/client/img/brand/location.png');
+
   height: 75px;
   text-align: center;
- background-size: 70px;
+ background-size: 65px;
   background-repeat: no-repeat;
 
   padding: 0;
@@ -114,14 +199,14 @@ li.uibtab-heading-location {
   background-position-x: 50%;
 }
 .col-xs-12.articles-col {
-  padding: 5px;
+
   margin: 0;
 }
 li.uibtab-heading-inbox {
-  background-image: url('/modules/core/client/img/brand/inbox.png');
+
   height: 75px;
   text-align: center;
-  background-size: 60px;
+  background-size: 55px;
   background-repeat: no-repeat;
 
   padding: 0;
@@ -130,10 +215,10 @@ li.uibtab-heading-inbox {
 }
 
 li.uibtab-heading-create {
-  background-image: url('/modules/core/client/img/brand/create.png');
+
   height: 75px;
   text-align: center;
-  background-size: 60px;
+  background-size: 55px;
   background-repeat: no-repeat;
 
   padding: 0;
@@ -213,13 +298,19 @@ a:hover .header-profile-image {
   margin-top: -25px;
 }
 .col-xs-12.helei-logo-col {
-  background-image: url('/modules/core/client/img/brand/helei-logo2.png');
-  height: 50px;
-  background-size: 100px 45px;
+  background-image: url('/modules/core/client/img/brand/helei-logo3.png');
+  height: 80px;
+  background-size: 150px 75px;
   background-repeat: no-repeat;
   background-position: 50%;
+  z-index: 999;
+  margin-bottom: -10px;
 }
 
+.nav-tabs > li > a:hover {
+  border-color: #eee #eee #ddd;
+  background: rgba(0, 0, 0, 0.06);
+}
 .col-xs-4.top-bar-tab-inbox {
 
   height: 50px;
@@ -230,7 +321,7 @@ a:hover .header-profile-image {
 
 
 .col-xs-4.top-bar-tab-location {
-  background-image: url('/modules/core/client/img/brand/helei-location.png');
+  background-image: url('/modules/core/client/img/brand/location.png');
   height: 50px;
   background-size: 45px 40px;
   background-repeat: no-repeat;
@@ -248,6 +339,14 @@ a:hover .header-profile-image {
   z-index: 1000;
   margin-bottom: 0;
   border-bottom: 1px solid black;
+  background: white;
+}
+
+.row.article-view-row {
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-left: 15px;
+  padding-bottom: 5px;
 }
 
 .col-xs-12.map-api-col{
@@ -255,15 +354,56 @@ a:hover .header-profile-image {
   padding: 0;
 
 }
+
+.tab-pane.ng-scope.active {
+  background: #FFCB53;
+}
 .col-xs-12.public-event-nearby-header-col {
   height: 50px;
   z-index: 1000;
   margin-top: -25px;
-  background: white;
   text-align: center;
+  background: #FFCB53;
+}
+
+.col-xs-12.public-event-nearby-header-col {
+  background: #FFCB53;
+  font-size: 20px;
+  font-family: ubuntu;
+  border-top: 1px solid black;
 }
 
 ng-map {
   height: 240px;
   border-bottom: 1px solid black;
+}
+
+
+.col-xs-5.calendar-event-start-col {
+  height: 100%;
+  margin-top: 7%;
+  padding-right: 0;
+}
+
+.row.event-date-start-row {
+  height: 100px;
+}
+.col-xs-1.calendar-glyph-start-col {
+  margin-top: 8%;
+  padding-left: 10px;
+
+}
+.col-xs-5.calendar-event-end-col {
+  height: 100%;
+  margin-top: 7%;
+  padding-right: 0;
+}
+
+.row.event-date-end-row {
+  height: 100px;
+}
+.col-xs-1.calendar-glyph-end-col {
+  margin-top: 8%;
+  padding-left: 10px;
+
 }

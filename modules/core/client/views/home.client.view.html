@@ -1,274 +1,496 @@
-<section ng-controller="HomeController" ng-init="init()">
+<section ng-controller="HomeController">
 
 
-  <a ng-click="open('beta')">
-  <div class="row helei-logo-row">
-    <div class="col-xs-12 helei-logo-col">
+    <a ng-click="open('beta')">
+        <div class="row helei-logo-row">
+            <div class="col-xs-12 helei-logo-col">
 
-    </div>
-  </div>
+            </div>
+        </div>
     </a>
 
 
-  <div class="row top-bar-tab">
+    <div class="row top-bar-tab">
 
-    <uib-tabset justified="false">
-
-    <uib-tab class="uibtab-heading-location" heading="">
-
-    <a ng-click="location()">
-
-   <!-- <div class="col-xs-4 top-bar-tab-location">
-
-    </div>-->
- <!--     <div class="col-xs-8 top-bar-tab-searchbar">
-
-          <label for="slocation"></label>
-          <input name="slocation" type="slocation" ng-model="slocation" id="slocation" class="form-control" placeholder="sLocation">
-
-        <label for="szoom"></label>
-        <input name="szoom" type="szoom" ng-model="szoom" id="szoom" class="form-control" placeholder="szoom">
+        <uib-tabset justified="false">
 
 
-      </div>-->
-    </a>
-      <div class="row map-api-row">
-        <div class="col-xs-12 map-api-col">
-          <div map-lazy-load="https://maps.google.com/maps/api/js">
-            <ng-map center="18.2106745, -66.4506886" zoom="{{szoom}}" zoom-control="false" map-type-control="false" street-view-control="false">
-              <section ng-controller="ArticlesController" ng-init="find()">
-              <custom-marker ng-repeat="article in articles" ui-sref="articles.view({articleId: article._id})" position="{{article.elocation}}">
-                <div class="cm">
-                <div class="front-display">
 
-                  <p class="list-group-item-heading" ng-bind="article.etitle"></p>
+            <uib-tab class="uibtab-heading-inbox" heading="">
+
+                <div class="row inbox-row">
+                    <div class="col-xs-12 inbox-col">
+
+                        <ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">
+                            <li ng-repeat="item in menu.items | orderBy: 'position'"
+                                ng-if="item.shouldRender(authentication.user);" ng-switch="item.type"
+                                ng-class="{ active: $state.includes(item.state), uib-dropdown: item.type === 'uib-dropdown' }"
+                                class="{{item.class}}" uib-dropdown="item.type === 'uib-dropdown'">
+                                <a ng-switch-when="uib-dropdown" class="uib-dropdown-toggle" uib-dropdown-toggle
+                                   role="button">{{::item.title}}&nbsp;<span class="caret"></span></a>
+                                <ul ng-switch-when="uib-dropdown" class="uib-dropdown-menu">
+                                    <li ng-repeat="subitem in item.items | orderBy: 'position'"
+                                        ng-if="subitem.shouldRender(authentication.user);" ui-sref-active="active">
+                                        <a ui-sref="{{subitem.state}}" ng-bind="subitem.title"></a>
+                                    </li>
+                                </ul>
+                                <a ng-switch-default ui-sref="{{item.state}}" ng-bind="item.title"></a>
+                            </li>
+                        </ul>
 
 
+                        <ul class="nav navbar-nav navbar-right" ng-show="authentication.user">
+                            <li class="uib-dropdown" uib-dropdown>
+                                <a class="uib-dropdown-toggle user-header-uib-dropdown-toggle" uib-dropdown-toggle
+                                   role="button">
+                                    <img ng-src="{{authentication.user.profileImageURL}}"
+                                         alt="{{authentication.user.displayName}}" class="header-profile-image"/>
+                                    <span ng-bind="authentication.user.displayName"></span> <b class="caret"></b>
+                                </a>
+                                <ul class="uib-dropdown-menu" role="menu">
+
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="/api/auth/signout" target="_self">Signout</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
-                  </div>
-             </custom-marker>
 
+
+
+                <div class="row" ng-hide="authentication.user">
+                    <div class="col-xs-12">
+                <section class="row" ng-controller="AuthenticationController">
+                    <h3 class="col-md-12 text-center">Sign in using your social accounts</h3>
+                    <div class="col-md-12 text-center">
+                        <img ng-click="callOauthProvider('/api/auth/facebook')" ng-src="/modules/users/client/img/buttons/facebook.png">
+
+                    </div>
+                    <div ui-view></div>
+                </section>
+                        </div>
+                    </div>
+
+             <div class="row" ng-hide="authentication.user">
+                 <div class="col-xs-12">
+
+                     <div ng-controller="AuthenticationController">
+                         <h3 class="col-md-12 text-center">Or with your account</h3>
+                         <div class="col-xs-offset-2 col-xs-8 col-md-offset-4 col-md-4">
+                             <form name="userForm" ng-submit="signin(userForm.$valid)" class="signin" novalidate autocomplete="off">
+                                 <fieldset>
+                                     <div class="form-group" show-errors>
+                                         <label for="username">Username</label>
+                                         <input type="text" id="username" name="username" class="form-control" ng-model="credentials.username" placeholder="Username" lowercase required>
+                                         <div ng-messages="userForm.username.$error" role="alert">
+                                             <p class="help-block error-text" ng-message="required">Username is required.</p>
+                                         </div>
+                                     </div>
+                                     <div class="form-group" show-errors>
+                                         <label for="password">Password</label>
+                                         <input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="Password" required>
+                                         <div ng-messages="userForm.password.$error" role="alert">
+                                             <p class="help-block error-text" ng-message="required">Password is required.</p>
+                                         </div>
+                                     </div>
+                                     <div class="text-center form-group">
+                                         <button type="submit" class="btn btn-primary">Sign in</button>
+                                         &nbsp; or&nbsp;
+                                         <a ui-sref="authentication.signup">Sign up</a>
+                                     </div>
+                                     <div class="text-center forgot-password">
+                                         <a ui-sref="password.forgot">Forgot your password?</a>
+                                     </div>
+                                     <alert type="danger" ng-show="error" class="text-center text-danger">
+                                         <span ng-bind="error"></span>
+                                     </alert>
+                                 </fieldset>
+                             </form>
+                         </div>
+                     </div>
+
+                 </div>
+             </div>
+
+
+                <div class="row" ng-show="authentication.user">
+                    <div class="col-xs-12">
+                        <form name="articleForm" class="form-horizontal" ng-submit=""
+                           novalidate>
+                         <fieldset>
+                             <div class="form-group">
+                                 <label for="feedback">
+                                     Feedback
+                                 </label>
+                                 <textarea name="feedback" ng-model="feedback" id="feedback"
+                                   class="form-control" cols="30" rows="10"
+                                   placeholder="Feedback">
+                                 </textarea>
+                             </div>
+                             <div class="form-group">
+                                 <input type="submit" class="btn btn-default">
+                             </div>
+
+                         </fieldset>
+                     </form>
+                    </div>
+                </div>
+
+
+
+            </uib-tab>
+
+            <uib-tab class="uibtab-heading-location" heading="" active="true" >
+
+                <a ng-click="redraw()">
+
+                    <!-- <div class="col-xs-4 top-bar-tab-location">
+
+                     </div>-->
+                    <!--     <div class="col-xs-8 top-bar-tab-searchbar">
+
+                             <label for="slocation"></label>
+                             <input name="slocation" type="slocation" ng-model="slocation" id="slocation" class="form-control" placeholder="sLocation">
+
+                           <label for="szoom"></label>
+                           <input name="szoom" type="szoom" ng-model="szoom" id="szoom" class="form-control" placeholder="szoom">
+
+
+                         </div>-->
+                </a>
+
+                <div class="row map-api-row">
+                    <div class="col-xs-12 map-api-col">
+                        <div map-lazy-load="https://maps.google.com/maps/api/js">
+                            <ng-map center="18.2106745, -66.4506886" zoom="{{szoom}}" zoom-control="false"
+                                    map-type-control="false" street-view-control="false">
+                                <section ng-controller="ArticlesController" ng-init="find()">
+                                    <custom-marker ng-repeat="article in articles"
+                                                   ui-sref="articles.view({articleId: article._id})"
+                                                   position="{{article.elocation}}">
+                                        <div class="cm">
+                                            <div class="front-display">
+
+                                                <p class="list-group-item-heading" ng-bind="article.etitle"></p>
+
+
+                                            </div>
+                                        </div>
+                                    </custom-marker>
+
+                                </section>
+
+                                <marker position="{{slocation}}"
+                                        icon="{url:'/modules/core/client/img/brand/helei-marker.png', scaledSize:[40,53]}"
+                                        animation="Animation.BOUNCE"></marker>
+
+                            </ng-map>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row public-event-nearby-header-row">
+                    <div class="col-xs-12 public-event-nearby-header-col">
+                        <p>Public Events Nearby</p>
+                    </div>
+                </div>
+
+                <div class="row public-event-nearby-row">
+                    <div class="col-xs-12 public-event-nearby-col">
+                        <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <!-- List group -->
+
+                            <section ng-controller="ArticlesController" ng-init="find()">
+                                <div class="list-group">
+                                    <a ng-repeat="article in articles" ui-sref="articles.view({articleId: article._id})"
+                                       class="list-group-item">
+                                        <div class="background-image"></div>
+                                        <div class="front-display">
+                                            <h4 class="list-group-item-heading" ng-bind="article.etitle"></h4>
+
+                                            <p class="list-group-item-text" ng-bind="article.econtent"></p>
+
+                                            <p class="list-group-item-text" ng-bind="article.dt"></p>
+
+                                            <p class="list-group-item-text" ng-bind="article.edt"></p>
+
+                                            <p class="list-group-item-text" ng-bind="article.ecategory"></p>
+
+                                            <p class="list-group-item-text" ng-bind="article.elocation"></p>
+
+
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="alert alert-warning text-center"
+                                     ng-if="articles.$resolved && !articles.length">
+                                    No event yet, why don't you <a ui-sref="articles.create">create one</a>?
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+            </uib-tab>
+
+
+            <uib-tab class="uibtab-heading-create" heading="">
+
+
+                <section ng-controller="ArticlesController">
+
+                    <div class="row article-view-row">
+                        <div class="col-xs-12 article-view-col">
+
+                            <div class="media">
+                                <div class="media-left media-middle">
+                                    <a href="#">
+                                        <img class="media-object" src="/modules/core/client/img/brand/coconut.png" alt="...">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="list-group-item-heading" ng-bind="etitle"></h4>
+                                    <small>
+                                    <p class="list-group-item-text" ng-bind="econtent"></p>
+
+                                    <p class="list-group-item-text" ng-bind="edate"></p>
+
+                                    <p class="list-group-item-text" ng-bind="elocation"></p>
+
+                                    <p class="list-group-item-text" ng-bind="ecategory"></p>
+
+                                    <p class="list-group-item-text"  ng-bind="dt"></p>
+
+                                    <p class="list-group-item-text"  ng-bind="edt"></p>
+                                    </small>
+                                </div>
+
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="row articles-row">
+                        <div class="col-xs-12 articles-col">
+                            <form name="articleForm" class="form-horizontal" ng-submit="create(articleForm.$valid)"
+                                  novalidate>
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group" show-errors>
+                                                <label for="etitle">Title</label>
+                                                <input name="etitle" type="text" ng-model="etitle" id="etitle"
+                                                       class="form-control" placeholder="Title" required>
+
+                                                <div ng-messages="articleForm.title.$error" role="alert">
+                                                    <p class="help-block error-text" ng-message="required">Article title
+                                                        is required.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label for="econtent">Content</label>
+                                                <textarea name="econtent" ng-model="econtent" id="econtent"
+                                                          class="form-control" cols="30" rows="10"
+                                                          placeholder="Content"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+
+                                            <div class="row">
+                                                <div class="col-xs-12 label-date-col"><label>Date</label></div>
+                                                <div class="col-xs-12 date-label-col"><label>Start</label></div>
+                                            </div>
+
+
+
+
+
+                                                <div class="row event-date-start-row">
+
+                                                    <div class="col-xs-1 calendar-glyph-start-col">
+
+                                                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+
+                                                    </div>
+                                                    <div class="col-xs-5 calendar-event-start-col">
+
+                                                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+
+                                                    </div>
+
+
+
+
+
+                                                    <div class="col-xs-6 hour-event-start-col">
+
+                                                        <uib-timepicker ng-model="dt" hour-step="hstep" minute-step="mstep"
+                                                                        show-meridian="ismeridian">
+
+                                                        </uib-timepicker>
+                                                    </div>
+
+
+
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12 date-label-col">
+                                                    <label>
+                                                        End
+                                                    </label>
+                                                </div>
+                                            </div>
+
+
+
+                                                <div class="row event-date-end-row">
+
+                                                    <div class="col-xs-1 calendar-glyph-end-col">
+
+                                                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+
+                                                    </div>
+                                                    <div class="col-xs-5 calendar-event-end-col">
+
+                                                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="edt" is-open="popup2.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+
+                                                    </div>
+
+
+
+
+
+                                                    <div class="col-xs-6 hour-event-start-col">
+
+                                                        <uib-timepicker ng-model="edt" hour-step="hstep" minute-step="mstep"
+                                                                        show-meridian="ismeridian">
+
+                                                        </uib-timepicker>
+                                                    </div>
+
+
+
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+
+
+
+                                        </div>
+
+
+
+           <!--                         <div class="row">
+                                        <div class="col-xs-12">
+
+                                            <div class="form-group">
+                                                <label for="ecategory">Category</label>
+                                                <input name="ecategory" type="text" ng-model="ecategory" id="ecategory"
+                                                       class="form-control" placeholder="Category" required>
+                                            </div>
+
+                                        </div>
+                                    </div>-->
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <label for="ecategory">Category</label>
+                                            <select class="form-control" name="ecategory" id="ecategory"
+                                                    ng-options="option.name for option in catdata.availableOptions track by option.id"
+                                                    ng-model="catdata.selectedOption"></select>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 location-auto-complete-col">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-xs-4">
+                                                        <label for="elocation">Location</label>
+                                                    </div>
+                                                    <div class="col-xs-8">
+                                                        <select ng-model="types">
+                                                            <option value="['geocode']">Geodode</option>
+                                                            <option value="['establishment']">Establishment</option>
+                                                            <option value="['address']">Address</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <input places-auto-complete
+                                                               ng-model="elocation"
+                                                               component-restrictions="{country:'pr'}"
+                                                               types="{{types}}"
+                                                               id="elocation"
+                                                               on-place-changed="placeChanged()"/>
+
+                                                        <div ng-show="place">
+                                                            Address = {{place.formatted_address}} <br/>
+                                                            Location: {{place.geometry.location}}<br/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="row"><div class="col-xs-12">
+                                         <div class="text-center form-group" ng-hide="uploader.queue.length">
+                                           <span class="btn btn-default btn-file">Select Image <input type="file" nv-file-select uploader="uploader">
+                                           </span>
+                                         </div>
+                                           </div></div>-->
+
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-default">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-show="error" class="text-danger">
+                                            <strong ng-bind="error"></strong>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
                 </section>
 
-              <marker position="{{slocation}}" icon="{url:'/modules/core/client/img/brand/helei-marker.png', scaledSize:[40,53]}"  animation="Animation.BOUNCE"></marker>
-
-            </ng-map>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="row public-event-nearby-header-row">
-        <div class="col-xs-12 public-event-nearby-header-col">
-          <p>Public Events Nearby</p>
-        </div>
-      </div>
-
-      <div class="row public-event-nearby-row">
-        <div class="col-xs-12 public-event-nearby-col">
-          <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <!-- List group -->
-
-            <section ng-controller="ArticlesController" ng-init="find()">
-              <div class="list-group">
-                <a ng-repeat="article in articles" ui-sref="articles.view({articleId: article._id})" class="list-group-item">
-                  <div class="background-image"></div>
-                  <div class="front-display">
-                    <small class="list-group-item-text">
-                      Posted on
-                      <span ng-bind="article.created | date:'mediumDate'"></span>
-                      by
-                      <span ng-bind="article.user.displayName"></span>
-                    </small>
-                    <h4 class="list-group-item-heading" ng-bind="article.etitle"></h4>
-
-                    <p class="list-group-item-text" ng-bind="article.econtent"></p>
-                    <p class="list-group-item-text" ng-bind="article.edate"></p>
-                    <p class="list-group-item-text" ng-bind="article.elocation"></p>
-                    <p class="list-group-item-text" ng-bind="article.ecategory"></p>
-                  </div>
-                </a>
-              </div>
-              <div class="alert alert-warning text-center" ng-if="articles.$resolved && !articles.length">
-                No event yet, why don't you <a ui-sref="articles.create">create one</a>?
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-
-    </uib-tab>
-
-
-      <uib-tab class="uibtab-heading-inbox" heading="">
-
-        <div class="row inbox-row">
-          <div class="col-xs-12 inbox-col">
-
-          <ul class="nav navbar-nav" ng-if="menu.shouldRender(authentication.user);">
-            <li ng-repeat="item in menu.items | orderBy: 'position'" ng-if="item.shouldRender(authentication.user);" ng-switch="item.type" ng-class="{ active: $state.includes(item.state), dropdown: item.type === 'dropdown' }" class="{{item.class}}" dropdown="item.type === 'dropdown'">
-              <a ng-switch-when="dropdown" class="dropdown-toggle" dropdown-toggle role="button">{{::item.title}}&nbsp;<span class="caret"></span></a>
-              <ul ng-switch-when="dropdown" class="dropdown-menu">
-                <li ng-repeat="subitem in item.items | orderBy: 'position'" ng-if="subitem.shouldRender(authentication.user);" ui-sref-active="active">
-                  <a ui-sref="{{subitem.state}}" ng-bind="subitem.title"></a>
-                </li>
-              </ul>
-              <a ng-switch-default ui-sref="{{item.state}}" ng-bind="item.title"></a>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right" ng-hide="authentication.user">
-            <li ui-sref-active="active">
-              <a ui-sref="authentication.signup">Sign Up</a>
-            </li>
-            <li class="divider-vertical"></li>
-            <li ui-sref-active="active">
-              <a ui-sref="authentication.signin">Sign In</a>
-            </li>
-          </ul>
-
-        <ul class="nav navbar-nav navbar-right" ng-show="authentication.user">
-          <li class="dropdown" dropdown>
-            <a class="dropdown-toggle user-header-dropdown-toggle" dropdown-toggle role="button">
-              <img ng-src="{{authentication.user.profileImageURL}}" alt="{{authentication.user.displayName}}" class="header-profile-image" />
-              <span ng-bind="authentication.user.displayName"></span> <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-              <li ui-sref-active="active">
-                <a ui-sref="settings.profile">Edit Profile</a>
-              </li>
-              <li ui-sref-active="active">
-                <a ui-sref="settings.picture">Change Profile Picture</a>
-              </li>
-              <li ui-sref-active="active" ng-show="authentication.user.provider === 'local'">
-                <a ui-sref="settings.password">Change Password</a>
-              </li>
-              <li ui-sref-active="active">
-                <a ui-sref="settings.accounts">Manage Social Accounts</a>
-              </li>
-              <li class="divider"></li>
-              <li>
-                <a href="/api/auth/signout" target="_self">Signout</a>
-              </li>
-
-            </ul>
-          </li>
-          </ul>
-
-        </div>
-        </div>
-
-
-
-
-      </uib-tab>
-
-
-
-      <uib-tab class="uibtab-heading-create" heading="">
-    <div class="col-xs-12 top-bar-tab-create">
-
+            </uib-tab>
+        </uib-tabset>
     </div>
-
-        <section ng-controller="ArticlesController">
-
-          <div class="row articles-row">
-          <div class="col-xs-12 articles-col">
-            <form name="articleForm" class="form-horizontal" ng-submit="create(articleForm.$valid)" novalidate>
-              <fieldset>
-                <div class="row"><div class="col-xs-12">
-                <div class="form-group" show-errors>
-                  <label for="etitle">eTitle</label>
-                  <input name="etitle" type="text" ng-model="etitle" id="etitle" class="form-control" placeholder="eTitle" required>
-                  <div ng-messages="articleForm.title.$error" role="alert">
-                    <p class="help-block error-text" ng-message="required">Article title is required.</p>
-                  </div>
-                </div>
-                  </div></div>
-                <div class="row"><div class="col-xs-12">
-                <div class="form-group">
-                  <label for="econtent">eContent</label>
-                  <textarea name="econtent" ng-model="econtent" id="econtent" class="form-control" cols="30" rows="10" placeholder="eContent"></textarea>
-                </div>
-                </div></div>
-
-                <div ng-controller="DatepickerDemoCtrl">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-                      </p>
-                    </div>
-                  </div>
-
-                </div>
-
-                <div class="row"><div class="col-xs-12">
-
-                <div class="form-group">
-                  <label for="ecategory">eCategory</label>
-                  <input name="ecategory" type="text" ng-model="ecategory" id="ecategory" class="form-control" placeholder="eCategory" required>
-                </div>
-
-                </div></div>
-                <div class="row"><div class="col-xs-12">
-                <div class="form-group">
-                  <div class="row"><div class="col-xs-12">
-                  <label for="elocation">eLocation</label>
-                    </div></div>
-
-
-
-
-
-                  <input places-auto-complete
-                         ng-model="elocation"
-                         component-restrictions="{country:'pr'}"
-                         types="{{types}}"
-                         id="elocation"
-                         on-place-changed="placeChanged()" />
-
-                  <select ng-model="types">
-                    <option value="['geocode']">Geodode</option>
-                    <option value="['establishment']">Establishment</option>
-                    <option value="['address']">Address</option>
-                  </select>
-
-                  <div ng-show="place">
-                    Address = {{place.formatted_address}} <br/>
-                    Location: {{place.geometry.location}}<br/>
-                  </div>
-
-
-                </div>
-
-                </div></div>
-               <!-- <div class="row"><div class="col-xs-12">
-                <div class="text-center form-group" ng-hide="uploader.queue.length">
-                  <span class="btn btn-default btn-file">Select Image <input type="file" nv-file-select uploader="uploader">
-                  </span>
-                </div>
-                  </div></div>-->
-
-                <div class="row"><div class="col-xs-12">
-                <div class="form-group">
-                  <input type="submit" class="btn btn-default">
-                </div>
-                  </div></div>
-                <div ng-show="error" class="text-danger">
-                  <strong ng-bind="error"></strong>
-                </div>
-              </fieldset>
-            </form>
-            </div>
-          </div>
-        </section>
-
-      </uib-tab>
-    </uib-tabset>
-  </div>
 
 </section>

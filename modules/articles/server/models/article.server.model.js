@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
  * Article Schema
  */
 var ArticleSchema = new Schema({
-  created: {
+  createdAt: {
     type: Date,
     default: Date.now
   },
@@ -29,22 +29,23 @@ var ArticleSchema = new Schema({
     type: String,
     default: ''
   },
-  edate:{
-    type: Date,
-    default: ''
-  },
   elocation:{
     type: String,
     default: ''
   },
+  dt: {
+    type: Date,
+    default: Date.now
+  },
+  edt: {
+    type: Date,
+    default: Date.now
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'
-  },
-  expiresAt: {
-    expires: 1 * 60,
-    type: String
   }
+
 });
 
 mongoose.model('Article', ArticleSchema);
