@@ -22,6 +22,9 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
           NgMap.getMap({timeout:5000}).then(function(map) {
 
+              $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE";
+
+
               var bounds = new google.maps.LatLngBounds();
               for (var k in map.customMarkers) {
                   var cm = map.customMarkers[k];
@@ -29,16 +32,10 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
                   bounds.extend(cm.getPosition());
               }
 
-              var markerCluster = new MarkerClusterer(map, map.customMarkers);
+              map.markerCluster = new MarkerClusterer(map, map.customMarkers);
               map.markerClusterer = new MarkerClusterer(map, map.dynMarkers, {});
-              map.setCenter(bounds.getCenter());
-              map.fitBounds(bounds);
-
-
-
-
-
-
+             // map.setCenter(bounds.getCenter());
+          //    map.fitBounds(bounds);
 
           });
 

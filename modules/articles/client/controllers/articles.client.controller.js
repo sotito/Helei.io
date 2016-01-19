@@ -1,9 +1,38 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles', '$window',
-  function ($scope, $stateParams, $location, Authentication, Articles, $window) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles', '$window', 'NgMap',
+  function ($scope, $stateParams, $location, Authentication, Articles, $window, NgMap) {
     $scope.authentication = Authentication;
+
+
+
+    $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE";
+
+
+
+    $scope.dynMarkers = [];
+
+
+    NgMap.getMap({timeout:5000}).then(function(map) {
+
+      $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE";
+
+
+      var bounds = new google.maps.LatLngBounds();
+
+      for (var k in map.customMarkers) {
+        var cm = map.customMarkers[k];
+        $scope.dynMarkers.push(cm);
+        bounds.extend(google.maps.geometry.encoding.encodePath(cm.getPosition()));
+      }
+
+      var markerCluster = new MarkerClusterer(map, google.maps.geometry.encoding.encodePath(map.customMarkers));
+     // map.markerClusterer = new MarkerClusterer(map, map.dynMarkers, {});
+      // map.setCenter(bounds.getCenter());
+      //    map.fitBounds(bounds);
+
+    });
 /*
     $scope.imageURL = "";
 
