@@ -8,17 +8,19 @@ module.exports = {
         'public/lib/bootstrap/dist/css/bootstrap-theme.css'
       ],
       js: [
+        'https://maps.google.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places',
+        'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js',
         'public/lib/angular/angular.js',
         'public/lib/angular-resource/angular-resource.js',
+        'public/lib/ngmap/build/scripts/ng-map.min.js',
         'public/lib/angular-animate/angular-animate.js',
         'public/lib/angular-messages/angular-messages.js',
         'public/lib/angular-ui-router/release/angular-ui-router.js',
         'public/lib/angular-ui-utils/ui-utils.js',
         'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-        'public/lib/angular-file-upload/angular-file-upload.js',
-        'https://maps.google.com/maps/api/js',
-          'https://maps.google.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places',
-        'public/lib/ngmap/build/scripts/ng-map.min.js'
+        'public/lib/angular-file-upload/angular-file-upload.js'
+
+
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },

@@ -39,8 +39,14 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var article = req.article;
 
-  article.title = req.body.title;
-  article.content = req.body.content;
+  article.etitle = req.body.etitle;
+  article.econtent = req.body.econtent;
+  article.ecategory = req.body.ecategory;
+  article.elocation = req.body.elocation;
+  article.dt = req.body.dt;
+  article.edt = req.body.edt;
+
+
 
   article.save(function (err) {
     if (err) {

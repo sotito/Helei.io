@@ -1,8 +1,8 @@
 'use strict';
 
 // Articles controller
-angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles',
-  function ($scope, $stateParams, $location, Authentication, Articles) {
+angular.module('articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Articles', '$window',
+  function ($scope, $stateParams, $location, Authentication, Articles, $window) {
     $scope.authentication = Authentication;
 /*
     $scope.imageURL = "";
@@ -37,6 +37,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
       // Redirect after save
       article.$save(function (response) {
         $location.path('articles/' + response._id);
+        $window.location.href="http://helei.co";
 
         // Clear form fields
         $scope.etitle = '';
@@ -49,6 +50,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
+
     };
 
     // Remove existing Article

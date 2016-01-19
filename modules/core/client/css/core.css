@@ -11,6 +11,11 @@
 .col-xs-12.date-label-col {
   text-align: center;
 }
+.gmnoprint {
+  cursor: default;
+  height: 0;
+  width: 0;
+}
 
 li.uibtab-heading-location.ng-isolate-scope.active {
 
@@ -374,7 +379,8 @@ a:hover .header-profile-image {
 }
 
 ng-map {
-  height: 240px;
+  height: 90%;
+  width: 100%;
   border-bottom: 1px solid black;
 }
 

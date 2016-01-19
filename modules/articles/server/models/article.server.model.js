@@ -34,12 +34,11 @@ var ArticleSchema = new Schema({
     default: ''
   },
   dt: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   edt: {
     type: Date,
-    default: Date.now
+    expires: '1s'
   },
   user: {
     type: Schema.ObjectId,

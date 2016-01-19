@@ -2,41 +2,82 @@
 
 var homeController = angular.module('core');
 
-homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap', '$uibModal',
-  function ($scope, Authentication, NgMap, $uibModal) {
+homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap', '$uibModal', '$timeout',
+  function ($scope, Authentication, NgMap, $uibModal, $timeout) {
     // This provides Authentication context.
     $scope.authentication = Authentication;
 
 
-    $scope.slocation = "";
+
+
+
+
+
+          $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE";
+
+
+
+          $scope.dynMarkers = [];
+
+
+          NgMap.getMap({timeout:5000}).then(function(map) {
+
+              var bounds = new google.maps.LatLngBounds();
+              for (var k in map.customMarkers) {
+                  var cm = map.customMarkers[k];
+                  $scope.dynMarkers.push(cm);
+                  bounds.extend(cm.getPosition());
+              }
+
+              var markerCluster = new MarkerClusterer(map, map.customMarkers);
+              map.markerClusterer = new MarkerClusterer(map, map.dynMarkers, {});
+              map.setCenter(bounds.getCenter());
+              map.fitBounds(bounds);
+
+
+
+
+
+
+
+          });
+
+
 
     $scope.szoom = 8;
-
-    $scope.slat = 18.2106745;
-
-    $scope.slng = -66.4506886;
 
 
 
 
     var edt = $scope.edt;
 
-    var catdata = $scope.catdata;
 
-    $scope.catdata = {
-      availableOptions: [
-        {id: '1', name: 'Happy Hour'},
-        {id: '2', name: 'Karaokee'},
-        {id: '3', name: 'Music'},
-        {id: '4', name: 'Food'},
-        {id: '5', name: 'Paranda'}
-      ],
-      selectedOption: {id: '3', name: 'Music'} //This sets the default value of the select in the ui
+
+
+    $scope.ecategory = {
+      ecategory: null
     };
 
-    var testcategory = $scope.catdata.selectedOption.name;
+    var imgopen = true;
 
-    $scope.ecategory=testcategory;
+    $scope.imgopen = imgopen;
+
+
+    $scope.ecategory = $scope.catdata;
+    var eventidtag;
+
+    $scope.getEventId = function(article){
+      console.log(article);
+    };
+
+
+    var eventDirId;
+    $scope.getEventDir = function(eventDir){
+      eventDirId = eventDir;
+      $scope.eventDirId = eventDir;
+      console.log(eventDir);
+
+    };
 
 
 
@@ -51,11 +92,11 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
     ];
 
 
-  /*  $scope.init = function () {
+   $scope.eventmodal = function (eventId) {
 
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
-        templateUrl: 'modules/beta/client/views/beta.client.view.html',
+        templateUrl: 'modules/articles/client/views/view-articles.client.view.html',
 
         controller: function ($scope, $uibModalInstance, $http) {
 
@@ -76,7 +117,7 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
       });
 
 
-    };*/
+    };
 
 
 
@@ -84,52 +125,15 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
 
 
-
-    var vm;
 
 
     $scope.types = "['establishment']";
+
     $scope.placeChanged = function() {
-      $scope.elocation = $scope.getPlace();
+      $scope.elocation = this.getPlace();
       console.log('location', $scope.elocation.geometry.location);
-      vm.map.setCenter($scope.elocation.geometry.location);
     };
 
-
-    NgMap.getMap().then(function(map) {
-
-
-      vm = map;
-
-      $scope.locations = [
-        [54.779951, 9.334164], [47.209613, 15.991539],
-        [51.975343, 7.596731], [51.97539, 7.596962],
-        [47.414847, 8.23485], [47.658028, 9.159596],
-        [47.525927, 7.68761], [50.85558, 9.704403],
-        [54.320664, 10.285977], [49.214374, 6.97506],
-        [52.975556, 7.596811], [52.975556, 7.596811],
-        [52.975556, 7.596811], [52.975556, 7.596811],
-        [52.975556, 7.596811], [52.975556, 7.596811],
-        [52.975556, 7.596811], [52.975556, 7.596811],
-        [52.975556, 7.596811], [52.975556, 7.596811]
-      ];
-
-
-
-      var markerCluster = new MarkerClusterer(map, map.customMarkers);
-
-
-
-      vm.home = vm.getCenter();
-
-
-
-
-      });
-
-    $scope.redraw = function(){
-      google.maps.event.trigger(vm.home, 'resize');
-    };
 
 
 
@@ -140,6 +144,8 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
 
         $scope.slocation = "current-position";
+
+
 
 
          };
@@ -244,7 +250,7 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
     $scope.ismeridian = true;
 
-/*
+
 
     $scope.update = function() {
 
@@ -252,7 +258,7 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
       $scope.dt.setMinutes( 0 );
       $scope.mytimestart = $scope.dt;
     };
-*/
+
 
 
 
@@ -265,14 +271,14 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
 
 
-  /*  $scope.update = function() {
+   $scope.update = function() {
 
 
       $scope.edt.setHours( 14 );
       $scope.edt.setMinutes( 0 );
       $scope.mytimeend = $scope.edt;
     };
-*/
+
 
 
     $scope.clear = function() {
@@ -298,6 +304,7 @@ homeController.controller('DatepickerDemoCtrl', ['$scope', 'Authentication', 'Ng
 
 homeController.controller('mapController',['$scope', 'Authentication', 'NgMap', '$uibModal',
   function ($scope, Authentication, NgMap, $uibModal) {
+
 
 /*
 
