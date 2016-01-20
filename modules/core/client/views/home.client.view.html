@@ -176,7 +176,7 @@
                                     <marker position="current-location" icon="{url:'/modules/core/client/img/brand/helei-marker.png', scaledSize:[40,53]}" animation="Animation.BOUNCE"></marker>
 
 
-                                    <custom-marker ng-repeat="article in articles" ui-sref="articles.view({articleId: article._id})" position="{{article.elocation}}"  >
+                                    <custom-marker ng-repeat="article in articles" ui-sref="articles.view({articleId: article._id})" position="{{article.elocationlat}},{{article.elocationlng}}"  >
 
                                         <div class="cm" ng-click="getEventId(article)">
 

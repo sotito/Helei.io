@@ -24,6 +24,7 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
               $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE";
 
+/*
 
               var bounds = new google.maps.LatLngBounds();
               for (var k in map.customMarkers) {
@@ -31,13 +32,16 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
                   $scope.dynMarkers.push(cm);
                   bounds.extend(cm.getPosition());
               }
+*/
 
-              map.markerCluster = new MarkerClusterer(map, map.customMarkers);
-              map.markerClusterer = new MarkerClusterer(map, map.dynMarkers, {});
-             // map.setCenter(bounds.getCenter());
+              var markerCluster = new MarkerClusterer(map, map.customMarkers);
+            //  map.markerClusterer = new MarkerClusterer(map, map.dynMarkers, {});
+             // map.setCenter(bounds.getCenter());z
           //    map.fitBounds(bounds);
 
           });
+
+
 
 
 
@@ -128,7 +132,10 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
     $scope.placeChanged = function() {
       $scope.elocation = this.getPlace();
-      console.log('location', $scope.elocation.geometry.location);
+        $scope.elocationlat = $scope.elocation.geometry.location.lat();
+        $scope.elocationlng = $scope.elocation.geometry.location.lng();
+      console.log($scope.elocationlat);
+      console.log($scope.elocationlng);
     };
 
 

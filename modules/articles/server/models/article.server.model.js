@@ -33,6 +33,16 @@ var ArticleSchema = new Schema({
     type: String,
     default: ''
   },
+  elocationlat:{
+    type: Number,
+    default: 0,
+    trim: true
+  },
+  elocationlng:{
+    type: Number,
+    default: 0,
+    trim: true
+  },
   dt: {
     type: Date
   },

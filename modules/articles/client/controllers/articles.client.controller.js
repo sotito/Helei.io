@@ -6,33 +6,6 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
     $scope.authentication = Authentication;
 
 
-
-    $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE";
-
-
-
-    $scope.dynMarkers = [];
-
-
-    NgMap.getMap({timeout:5000}).then(function(map) {
-
-      $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE";
-
-
-      var bounds = new google.maps.LatLngBounds();
-
-      for (var k in map.customMarkers) {
-        var cm = map.customMarkers[k];
-        $scope.dynMarkers.push(cm);
-        bounds.extend(google.maps.geometry.encoding.encodePath(cm.getPosition()));
-      }
-
-      var markerCluster = new MarkerClusterer(map, google.maps.geometry.encoding.encodePath(map.customMarkers));
-     // map.markerClusterer = new MarkerClusterer(map, map.dynMarkers, {});
-      // map.setCenter(bounds.getCenter());
-      //    map.fitBounds(bounds);
-
-    });
 /*
     $scope.imageURL = "";
 
@@ -59,6 +32,8 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$statePa
         econtent: this.econtent,
         ecategory: this.ecategory,
         elocation: this.elocation,
+        elocationlat: this.elocationlat,
+        elocationlng: this.elocationlng,
         dt: this.dt,
         edt: this.edt
       });

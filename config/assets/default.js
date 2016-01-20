@@ -8,8 +8,6 @@ module.exports = {
         'public/lib/bootstrap/dist/css/bootstrap-theme.css'
       ],
       js: [
-
-        'https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE&placeses,visualization,drawing,geometry,places',
         'https://maps.google.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places',
         'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js',
         'public/lib/angular/angular.js',
