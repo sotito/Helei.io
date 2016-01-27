@@ -1,3 +1,30 @@
+<div class="container" ng-controller="HeaderController">
+  <div class="row inverse-navbar-row">
+    <div class="col-xs-12 inverse-navbar-col">
+
+  <div ng-model="topview" ng-init="topview=true">
+<div ng-if="topview">
+
+  <button type="button" class="btn btn-default btn-lg" ng-click="gotoBottom()">
+    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+  </button>
+</div>
+
+  <div ng-if="!topview">
+    <button type="button" class="btn btn-default btn-lg" ng-click="gotoTop()">
+      <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+    </button>
+  </div>
+
+    </div>
+
+  </div>
+  </div>
+
+</div>
+
+
+
 <!--
 <div class="container" ng-controller="HeaderController">
   <div class="navbar-header">

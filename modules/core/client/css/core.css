@@ -232,14 +232,24 @@ li.uibtab-heading-create {
 }
 
 
-
+.row.inverse-navbar-row {
+  text-align: center;
+}
+button.btn.btn-default.btn-lg {
+  background: transparent;
+  border: transparent;
+}
+.glyphicon-menu-down:before {
+  color: #FFD566;
+  border: #FFD566;
+}
+.glyphicon-menu-up:before {
+  color: black;
+  border: black;
+}
 header.navbar.navbar-fixed-bottom.navbar-inverse {
-  opacity: 0.90;
-  background: url('/modules/core/client/img/brand/helei-event-2.png') rgba(192, 192, 192, 0.79);
-  background-position-y: -17px;
-  background-size: 100% 86px;
-  border: 0;
-  background-repeat: no-repeat;
+  background: transparent;
+  border: transparent;
   margin: 0;
   padding: 0;
 }

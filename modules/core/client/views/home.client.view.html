@@ -1,5 +1,5 @@
 <section ng-controller="HomeController">
-
+    <a id="top"></a>
 
     <a>
         <div class="row helei-logo-row">
@@ -168,8 +168,8 @@
                 <div class="row map-api-row">
                     <div class="col-xs-12 map-api-col">
                         <div  map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{googleMapsUrl}}">
-                            <ng-map  center="18.2106745, -66.4506886" zoom="{{szoom}}" zoom-control="false"
-                                    map-type-control="false" street-view-control="false">
+                            <ng-map  center="current-position" zoom="{{szoom}}" zoom-control="false"
+                                    map-type-control="false" street-view-control="false" geo-fallback-center="18.2106745, -66.4506886" geo-callback="callbackFunc()">
 
 
                                 <section ng-controller="ArticlesController" ng-init="find()">
@@ -195,6 +195,8 @@
                                             origin="current-location"
                                             destination="{{eventDirId}}">
                                     </directions>
+
+
                                 </section>
 
 
@@ -262,6 +264,9 @@
                         </div>
                     </div>
                 </div>
+
+                <a id="bottom"></a>
+
 
             </uib-tab>
 

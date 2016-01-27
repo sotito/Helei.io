@@ -13,112 +13,123 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
 
 
+
+
+
+
+      $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE";
+
+
+
+      $scope.dynMarkers = [];
+
+
+      NgMap.getMap({timeout:5000}).then(function(map) {
+
           $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE";
 
+          /*
+           var bounds = new google.maps.LatLngBounds();
+           for (var k in map.customMarkers) {
+           var cm = map.customMarkers[k];
+           $scope.dynMarkers.push(cm);
+           bounds.extend(cm.getPosition());
+           }
+           */
 
-
-          $scope.dynMarkers = [];
-
-
-          NgMap.getMap({timeout:5000}).then(function(map) {
-
-              $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpBrWGaTh-XzFaNoaSR0FkjUaAWfDPRjE";
-
-/*
-
-              var bounds = new google.maps.LatLngBounds();
-              for (var k in map.customMarkers) {
-                  var cm = map.customMarkers[k];
-                  $scope.dynMarkers.push(cm);
-                  bounds.extend(cm.getPosition());
-              }
-*/
-
-              var markerCluster = new MarkerClusterer(map, map.customMarkers);
-            //  map.markerClusterer = new MarkerClusterer(map, map.dynMarkers, {});
-             // map.setCenter(bounds.getCenter());z
+          var markerCluster = new MarkerClusterer(map, map.customMarkers);
+          //  map.markerClusterer = new MarkerClusterer(map, map.dynMarkers, {});
+          // map.setCenter(bounds.getCenter());z
           //    map.fitBounds(bounds);
 
-          });
-
-
-
-
-
-    $scope.szoom = 8;
-
-
-
-
-    var edt = $scope.edt;
-
-
-
-
-    $scope.ecategory = {
-      ecategory: null
-    };
-
-    var imgopen = true;
-
-    $scope.imgopen = imgopen;
-
-
-    $scope.ecategory = $scope.catdata;
-    var eventidtag;
-
-    $scope.getEventId = function(article){
-      console.log(article);
-    };
-
-
-    var eventDirId;
-    $scope.getEventDir = function(eventDir){
-      eventDirId = eventDir;
-      $scope.eventDirId = eventDir;
-      console.log(eventDir);
-
-    };
-
-
-
-
-
-
-
-    $scope.tabs = [
-      { },
-      { },
-      { },
-    ];
-
-
-   $scope.eventmodal = function (eventId) {
-
-      var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: 'modules/articles/client/views/view-articles.client.view.html',
-
-        controller: function ($scope, $uibModalInstance, $http) {
-
-
-
-          $scope.ok = function () {
-            $uibModalInstance.ok();
-
-          };
-
-          $scope.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
-          };
-
-
-        },
-        size: 'lg'
       });
 
 
-    };
+
+
+
+      $scope.szoom = 8;
+
+
+
+
+      var edt = $scope.edt;
+
+
+
+
+      $scope.ecategory = {
+          ecategory: null
+      };
+
+      var imgopen = true;
+
+      $scope.imgopen = imgopen;
+
+
+      $scope.ecategory = $scope.catdata;
+      var eventidtag;
+
+      $scope.getEventId = function(article){
+          console.log(article);
+      };
+
+
+      var eventDirId;
+      $scope.getEventDir = function(eventDir){
+          eventDirId = eventDir;
+          $scope.eventDirId = eventDir;
+          console.log(eventDir);
+
+      };
+
+
+
+      $scope.callbackFunc = function(){
+
+          NgMap.getMap({timeout:5000}).then(function(map) {
+
+              console.log(map.getCenter());
+      });
+          };
+
+
+
+
+
+      $scope.tabs = [
+          { },
+          { },
+          { },
+      ];
+
+
+      $scope.eventmodal = function (eventId) {
+
+          var modalInstance = $uibModal.open({
+              animation: $scope.animationsEnabled,
+              templateUrl: 'modules/articles/client/views/view-articles.client.view.html',
+
+              controller: function ($scope, $uibModalInstance, $http) {
+
+
+
+                  $scope.ok = function () {
+                      $uibModalInstance.ok();
+
+                  };
+
+                  $scope.cancel = function () {
+                      $uibModalInstance.dismiss('cancel');
+                  };
+
+
+              },
+              size: 'lg'
+          });
+
+
+      };
 
 
 
@@ -128,16 +139,15 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
 
 
-    $scope.types = "['establishment']";
+      $scope.types = "['establishment']";
 
-    $scope.placeChanged = function() {
-      $scope.elocation = this.getPlace();
-        $scope.elocationlat = $scope.elocation.geometry.location.lat();
-        $scope.elocationlng = $scope.elocation.geometry.location.lng();
-      console.log($scope.elocationlat);
-      console.log($scope.elocationlng);
-    };
-
+      $scope.placeChanged = function() {
+          $scope.elocation = this.getPlace();
+          $scope.elocationlat = $scope.elocation.geometry.location.lat();
+          $scope.elocationlng = $scope.elocation.geometry.location.lng();
+          console.log($scope.elocationlat);
+          console.log($scope.elocationlng);
+      };
 
 
 
@@ -293,55 +303,4 @@ homeController.controller('HomeController', ['$scope', 'Authentication', 'NgMap'
 
 
   }]);
-
-
-homeController.controller('DatepickerDemoCtrl', ['$scope', 'Authentication', 'NgMap', '$uibModal',
-    function ($scope, Authentication, NgMap, $uibModal) {
-
-    }]);
-
-
-
-
-
-
-
-homeController.controller('mapController',['$scope', 'Authentication', 'NgMap', '$uibModal',
-  function ($scope, Authentication, NgMap, $uibModal) {
-
-
-/*
-
-    var vm = this;
-    vm.positions = [
-      [54.779951, 9.334164], [47.209613, 15.991539],
-      [51.975343, 7.596731], [51.97539, 7.596962],
-      [47.414847, 8.23485], [47.658028, 9.159596],
-      [47.525927, 7.68761], [50.85558, 9.704403],
-      [54.320664, 10.285977], [49.214374, 6.97506],
-      [52.975556, 7.596811], [52.975556, 7.596811],
-      [52.975556, 7.596811], [52.975556, 7.596811],
-      [52.975556, 7.596811], [52.975556, 7.596811],
-      [52.975556, 7.596811], [52.975556, 7.596811],
-      [52.975556, 7.596811], [52.975556, 7.596811]];
-
-    vm.dynMarkers = []
-    NgMap.getMap().then(function(map) {
-      var bounds = new google.maps.LatLngBounds();
-      for (var k in map.customMarkers) {
-        var cm = map.customMarkers[k];
-        vm.dynMarkers.push(cm);
-        bounds.extend(cm.getPosition());
-      };
-
-      vm.markerClusterer = new MarkerClusterer(map, vm.dynMarkers, {});
-      map.setCenter(bounds.getCenter());
-      map.fitBounds(bounds);
-    });
-*/
-
-
-}]);
-
-
 
